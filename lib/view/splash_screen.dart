@@ -12,11 +12,17 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      backgroundColor: Colors.brown,
+      backgroundColor: Colors.black87,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
+            Image(
+              image: AssetImage('assets/images/hstu_logo.png'),
+              width: 150, // Adjust width as needed
+              height: 150, // Adjust height as needed
+            ),
+            SizedBox(height: 20),
             Text(
               'Welcome to Automatic Exam Routine Generator App',
               textAlign: TextAlign.center,

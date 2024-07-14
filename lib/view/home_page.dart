@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: const [
             Text(
               'The HSTU Automated Exam Routine Generator is a specialized software designed to streamline the process of creating optimal exam schedules for Hajee Mohammad Danesh Science and Technology University. Users input relevant information, and the software utilizes algorithms to efficiently generate and store well-organized routines. This user-friendly tool simplifies the task of creating and managing exam schedules for HSTU.',
               style: TextStyle(fontSize: 16.0),
