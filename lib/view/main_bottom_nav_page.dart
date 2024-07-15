@@ -17,9 +17,8 @@ class _MainBottomNavPageState extends State<MainBottomNavPage> {
   final List<Widget> _screens = [
     const HomePage(),
     CreatePage(),
-     ShowPage(),
-     ContactPage(),
-     FeedbackPage(),
+    ContactPage(),
+    FeedbackPage(),
   ];
 
   @override
@@ -36,11 +35,10 @@ class _MainBottomNavPageState extends State<MainBottomNavPage> {
         selectedItemColor: Colors.brown,
         unselectedItemColor: Colors.blue,
         showSelectedLabels: true,
-        backgroundColor: Colors.grey[200], // Set your desired background color here
+        backgroundColor: Colors.grey[200],
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.create_new_folder_outlined), label: 'Create'),
-          BottomNavigationBarItem(icon: Icon(Icons.show_chart_rounded), label: 'Show'),
           BottomNavigationBarItem(icon: Icon(Icons.perm_contact_calendar_rounded), label: 'Contact'),
           BottomNavigationBarItem(icon: Icon(Icons.feedback_outlined), label: 'Feedback'),
         ],

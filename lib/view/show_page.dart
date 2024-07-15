@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-class ShowPage extends StatefulWidget {
+class ShowPage extends StatelessWidget {
   final DateTime initialDate;
   final DateTime specialOffDate;
   final int selectedLevel;
@@ -13,8 +13,7 @@ class ShowPage extends StatefulWidget {
   final bool allowSaturdayOff;
   final String room;
 
-  const ShowPage({
-    Key? key,
+  ShowPage({
     required this.initialDate,
     required this.specialOffDate,
     required this.selectedLevel,
@@ -22,84 +21,92 @@ class ShowPage extends StatefulWidget {
     required this.allowFridayOff,
     required this.allowSaturdayOff,
     required this.room,
-  }) : super(key: key);
+  });
 
-  @override
-  _ShowPageState createState() => _ShowPageState();
-}
+  Future<void> _generatePDF(BuildContext context) async {
+    final pdf = pw.Document();
 
-class _ShowPageState extends State<ShowPage> {
-  late String _pdfPath;
-  late pw.Document _pdf;
-
-  @override
-  void initState() {
-    super.initState();
-    _pdf = pw.Document();
-    _createPDF();
-  }
-
-  Future<void> _createPDF() async {
-    final pw.PageTheme pageTheme = pw.PageTheme(
-      pageFormat: pw.PdfPageFormat.a4,
-      margin: pw.EdgeInsets.all(40),
-    );
-
-    _pdf.addPage(
+    pdf.addPage(
       pw.Page(
-        pageTheme: pageTheme,
         build: (pw.Context context) {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Text('Automated Exam Routine', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+              pw.Text('Automated Exam Routine Generator (AERG)',
+                  style: pw.TextStyle(
+                      fontSize: 24, fontWeight: pw.FontWeight.bold)),
               pw.SizedBox(height: 20),
-              pw.Text('Initial Date: ${DateFormat('MM/dd/yyyy').format(widget.initialDate)}'),
-              pw.Text('Special Off Date: ${DateFormat('MM/dd/yyyy').format(widget.specialOffDate)}'),
-              pw.Text('Level: ${widget.selectedLevel}'),
-              pw.Text('Semester: ${widget.selectedSemester}'),
-              pw.Text('Allow Friday Off: ${widget.allowFridayOff ? 'Yes' : 'No'}'),
-              pw.Text('Allow Saturday Off: ${widget.allowSaturdayOff ? 'Yes' : 'No'}'),
-              pw.Text('Room: ${widget.room}'),
+              pw.Text('Faculty: CSE'),
+              pw.Text(
+                  'Name of the examination: B.Sc (Engineering) in CSE Level $selectedLevel Semester $selectedSemester'),
+              pw.Text(
+                  'Center: Dr. Muhammad Qudrat-i-Khuda Academic Building, HSTU'),
+              pw.Text('Time: 9:30 AM'),
+              pw.Text('Room: $room'),
+              pw.SizedBox(height: 20),
+              pw.Table.fromTextArray(
+                headers: ['DATE', 'DAY', 'COURSE'],
+                data: [
+                  [
+                    DateFormat('dd-MM-yyyy').format(initialDate),
+                    DateFormat('EEEE').format(initialDate),
+                    'CSE 151'
+                  ],
+                  [
+                    DateFormat('dd-MM-yyyy')
+                        .format(initialDate.add(const Duration(days: 4))),
+                    DateFormat('EEEE')
+                        .format(initialDate.add(const Duration(days: 4))),
+                    'CSE 153'
+                  ],
+                  [
+                    DateFormat('dd-MM-yyyy')
+                        .format(initialDate.add(const Duration(days: 8))),
+                    DateFormat('EEEE')
+                        .format(initialDate.add(const Duration(days: 8))),
+                    'EEE 155'
+                  ],
+                  [
+                    DateFormat('dd-MM-yyyy')
+                        .format(initialDate.add(const Duration(days: 12))),
+                    DateFormat('EEEE')
+                        .format(initialDate.add(const Duration(days: 12))),
+                    'MAT 105'
+                  ],
+                  [
+                    DateFormat('dd-MM-yyyy')
+                        .format(initialDate.add(const Duration(days: 15))),
+                    DateFormat('EEEE')
+                        .format(initialDate.add(const Duration(days: 15))),
+                    'SOC 103'
+                  ],
+                ],
+              ),
             ],
           );
         },
       ),
     );
 
-    final Directory tempDir = await getTemporaryDirectory();
-    final String tempPath = tempDir.path;
-    final String fileName = 'routine_${DateTime.now().millisecondsSinceEpoch}.pdf';
-    final String filePath = '$tempPath/$fileName';
-    final File file = File(filePath);
-    await file.writeAsBytes(await _pdf.save());
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/routine.pdf');
+    await file.writeAsBytes(await pdf.save());
 
-    setState(() {
-      _pdfPath = filePath;
-    });
-
-    // Uncomment to automatically open the PDF after generation
-    // await PdfViewer.openFile(file.path); // Ensure PdfViewer or alternative is correctly defined
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('PDF Saved at ${file.path}')));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Show Page'),
+        title: const Text('Exam Routine'),
       ),
-      body: _pdfPath != null
-          ? Center(
+      body: Center(
         child: ElevatedButton(
-          onPressed: () async {
-            // Example for opening PDF
-            // await PdfViewer.openFile(File(_pdfPath).path);
-          },
-          child: Text('Open PDF'),
+          onPressed: () => _generatePDF(context),
+          child: const Text('Generate PDF'),
         ),
-      )
-          : Center(
-        child: CircularProgressIndicator(),
       ),
     );
   }

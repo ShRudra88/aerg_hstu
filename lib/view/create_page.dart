@@ -1,7 +1,6 @@
-import 'package:aerg_hstu/view/show_page.dart';
 import 'package:flutter/material.dart';
+import 'package:aerg_hstu/view/show_page.dart';
 import 'package:intl/intl.dart';
-
 
 class CreatePage extends StatefulWidget {
   @override
@@ -10,7 +9,7 @@ class CreatePage extends StatefulWidget {
 
 class _CreatePageState extends State<CreatePage> {
   DateTime _initialDate = DateTime.now();
-  DateTime _specialOffDate = DateTime.now(); // Initialize _specialOffDate here
+  DateTime _specialOffDate = DateTime.now();
   int _selectedLevel = 1;
   String _selectedSemester = 'II';
   bool _allowFridayOff = false;
@@ -39,20 +38,20 @@ class _CreatePageState extends State<CreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Automated Routine Generator'),
+        title: const Text('Automated Routine Generator'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Create an Automated Routine',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 border: Border.all(color: Colors.blueAccent),
@@ -61,21 +60,21 @@ class _CreatePageState extends State<CreatePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Enter your Initial date'),
-                  SizedBox(height: 10),
+                  const Text('Enter your Initial date'),
+                  const SizedBox(height: 10),
                   InkWell(
                     onTap: () => _selectDate(context),
                     child: InputDecorator(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         suffixIcon: Icon(Icons.calendar_today),
                       ),
                       child: Text(DateFormat('MM/dd/yyyy').format(_initialDate)),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Text('Enter level'),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 20),
+                  const Text('Enter level'),
+                  const SizedBox(height: 10),
                   DropdownButton<int>(
                     value: _selectedLevel,
                     isExpanded: true,
@@ -92,9 +91,9 @@ class _CreatePageState extends State<CreatePage> {
                       );
                     }).toList(),
                   ),
-                  SizedBox(height: 20),
-                  Text('Enter Semester'),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 20),
+                  const Text('Enter Semester'),
+                  const SizedBox(height: 10),
                   DropdownButton<String>(
                     value: _selectedSemester,
                     isExpanded: true,
@@ -110,30 +109,30 @@ class _CreatePageState extends State<CreatePage> {
                       );
                     }).toList(),
                   ),
-                  SizedBox(height: 20),
-                  Text('Room'),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 20),
+                  const Text('Room'),
+                  const SizedBox(height: 10),
                   TextField(
                     controller: _roomController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Room',
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Text('Enter your special off date'),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 20),
+                  const Text('Enter your special off date'),
+                  const SizedBox(height: 10),
                   InkWell(
                     onTap: () => _selectDate(context, isInitialDate: false),
                     child: InputDecorator(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         suffixIcon: Icon(Icons.calendar_today),
                       ),
                       child: Text(DateFormat('MM/dd/yyyy').format(_specialOffDate)),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -151,14 +150,14 @@ class _CreatePageState extends State<CreatePage> {
                         ),
                       );
                     },
-                    child: Text('Generate Routine'),
+                    child: const Text('Generate Routine'),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: Colors.teal[100],
                 border: Border.all(color: Colors.blueAccent),
@@ -167,8 +166,8 @@ class _CreatePageState extends State<CreatePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Allow the off Day'),
-                  SizedBox(height: 10),
+                  const Text('Allow the off Day'),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       Checkbox(
@@ -179,7 +178,7 @@ class _CreatePageState extends State<CreatePage> {
                           });
                         },
                       ),
-                      Text('Friday'),
+                      const Text('Friday'),
                     ],
                   ),
                   Row(
@@ -192,7 +191,7 @@ class _CreatePageState extends State<CreatePage> {
                           });
                         },
                       ),
-                      Text('Saturday'),
+                      const Text('Saturday'),
                     ],
                   ),
                 ],
